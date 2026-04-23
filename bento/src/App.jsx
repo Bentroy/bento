@@ -193,7 +193,7 @@ export default function App() {
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
-  // Force solid navbar on external pages, or when scrolled on home page
+ // Force solid navbar on external pages, or when scrolled on home page
   const isSolid = location.pathname !== '/' || scrolled;
 
   // Custom scroll handler that works even if you are on an external page

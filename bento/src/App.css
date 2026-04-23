@@ -32,31 +32,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 a { text-decoration: none; color: inherit; }
 
 /* ─── NAV ──────────────────────────────────────── */
+/* 1. Default State: Solid Background & Dark Text (used when scrolled or on other pages) */
 .nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
   height: var(--nav-h);
-  transition: background 0.35s, box-shadow 0.35s;
-}
-
-/* Force elements to be completely dark when nav is solid */
-.nav-solid {
-  background: rgba(248,246,242,0.98);
+  background: rgba(248,246,242,0.98); /* Solid light background */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 1px 0 var(--border);
-}
-.nav-solid .logo-text, .nav-solid .nav-link {
-  color: var(--ink) !important;
-}
-.nav-solid .logo-mark {
-  background: var(--ink) !important;
-  color: var(--gold) !important;
-  border: none !important;
-}
-.nav-solid .bar {
-  background: var(--ink) !important;
+  transition: all 0.35s ease;
 }
 
 .nav-inner {
@@ -69,7 +55,7 @@ a { text-decoration: none; color: inherit; }
   padding: 0 28px;
 }
 
-/* LOGO */
+/* LOGO (Dark by default) */
 .logo {
   display: flex;
   align-items: center;
@@ -92,14 +78,10 @@ a { text-decoration: none; color: inherit; }
   font-weight: 600;
   font-size: 17px;
   letter-spacing: 4px;
-  color: var(--ink);
+  color: var(--ink); /* Dark text */
 }
 
-/* white logo variant over hero */
-.nav:not(.nav-solid) .logo-text { color: #fff; }
-.nav:not(.nav-solid) .logo-mark { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
-
-/* NAV LINKS */
+/* NAV LINKS (Dark by default) */
 .nav-links {
   display: flex;
   align-items: center;
@@ -109,17 +91,14 @@ a { text-decoration: none; color: inherit; }
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.5px;
-  color: var(--ink-soft);
+  color: var(--ink-soft); /* Dark text */
   padding: 7px 14px;
   border-radius: 50px;
   transition: color 0.2s, background 0.2s;
 }
 .nav-link:hover { color: var(--ink); background: rgba(0,0,0,0.05); }
 
-/* white links over hero */
-.nav:not(.nav-solid) .nav-link { color: rgba(255,255,255,0.8); }
-.nav:not(.nav-solid) .nav-link:hover { color: #fff; background: rgba(255,255,255,0.12); }
-
+/* WHATSAPP BUTTON */
 .nav-wa {
   display: flex;
   align-items: center;
@@ -135,7 +114,7 @@ a { text-decoration: none; color: inherit; }
 }
 .nav-wa:hover { background: #1db954; transform: scale(1.03); }
 
-/* HAMBURGER */
+/* HAMBURGER (Dark by default) */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -146,11 +125,22 @@ a { text-decoration: none; color: inherit; }
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--ink);
+  background: var(--ink); /* Dark lines */
   border-radius: 2px;
   transition: all 0.3s;
 }
-.nav:not(.nav-solid) .bar { background: #fff; }
+
+/* 2. Transparent State: No Background & White Text (Only active at top of Home page) */
+.nav.nav-transparent {
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+.nav.nav-transparent .logo-text { color: #ffffff; }
+.nav.nav-transparent .logo-mark { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+.nav.nav-transparent .nav-link { color: rgba(255,255,255,0.8); }
+.nav.nav-transparent .nav-link:hover { color: #ffffff; background: rgba(255,255,255,0.12); }
+.nav.nav-transparent .bar { background: #ffffff; }
 
 /* ─── HERO ─────────────────────────────────────── */
 .hero {
