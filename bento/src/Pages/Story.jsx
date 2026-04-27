@@ -96,14 +96,14 @@ export default function StoryPage() {
               name: 'Emeka Okafor',
               role: 'Co-Founder & Chief Executive',
               bio: "With a B.Sc. in Civil Engineering from University of Lagos and an MBA from INSEAD, Emeka leads Cove Associates' operations and strategic direction. He's been on over 40 sites and still visits every active project weekly.",
-              img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80',
+              img: 'https://unsplash.com/photos/man-in-blue-suit-jacket-QIMjYJSFoXM',
               initials: 'EO',
             },
             {
               name: 'Sade Williams',
               role: 'Co-Founder & Creative Director',
               bio: "Trained at the Architectural Association in London, Sade leads all design direction at Cove Associates. Her eye for space, material, and detail is the invisible hand behind every beautiful Cove Associates project.",
-              img: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80',
+              img: 'https://unsplash.com/photos/woman-in-orange-blazer-standing-AzVexpHvuKY',
               initials: 'SW',
             },
           ].map(p => (
