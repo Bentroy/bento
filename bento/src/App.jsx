@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import './App.css'
+import StoryPage from './Pages/Story.jsx'
+import ServicesPage from './Pages/Services.jsx'
+import PortfolioPage from './Pages/Portfolio.jsx'
 
 /* ── Scroll-fade hook ─────────────────────────── */
 function useFadeIn() {
@@ -42,24 +45,40 @@ function Slider({ images }) {
 }
 
 /* ── Section ──────────────────────────────────── */
-function Section({ id, tag, heading, body, images, reverse, cta, ctaLink }) {
+function Section({ id, tag, heading, body, images, reverse, cta, ctaHref, ctaIsInternal }) {
   const ref = useFadeIn()
+  const navigate = useNavigate()
+
+  const handleCta = (e) => {
+    if (ctaIsInternal && ctaHref) {
+      e.preventDefault()
+      navigate(ctaHref)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
   return (
     <section id={id} className={`section ${reverse ? 'reverse' : ''}`} ref={ref}>
       <div className="section-text fade-child" style={{ '--delay': '0s' }}>
         <span className="section-tag">{tag}</span>
         <h2 className="section-heading">{heading}</h2>
         <p className="section-body">{body}</p>
-        
-        {/* If it has an external link, route to it. Otherwise, assume it's a WhatsApp link */}
-        {cta && ctaLink ? (
-          <Link to={ctaLink} className="section-cta">{cta} →</Link>
-        ) : cta ? (
+        {cta && ctaHref && (
+          <a
+            href={ctaIsInternal ? ctaHref : ctaHref}
+            className="section-cta"
+            onClick={ctaIsInternal ? handleCta : undefined}
+            target={ctaIsInternal ? undefined : '_blank'}
+            rel={ctaIsInternal ? undefined : 'noopener noreferrer'}
+          >
+            {cta} →
+          </a>
+        )}
+        {cta && !ctaHref && (
           <a href="https://wa.me/2348000000000" className="section-cta" target="_blank" rel="noopener noreferrer">
             {cta} →
           </a>
-        ) : null}
-        
+        )}
       </div>
       <div className="section-visual fade-child" style={{ '--delay': '0.15s' }}>
         <Slider images={images} />
@@ -68,26 +87,106 @@ function Section({ id, tag, heading, body, images, reverse, cta, ctaLink }) {
   )
 }
 
+/* ── Testimonials ─────────────────────────────── */
+const testimonials = [
+  {
+    quote: "Cove Associates transformed our vision into reality with precision we didn't think was possible in Lagos. Every detail, every finish — absolutely flawless.",
+    name: 'Amaka Osei',
+    role: 'Homeowner, Lekki Phase 1',
+    initials: 'AO',
+  },
+  {
+    quote: "We gave them a tight deadline for our Ikoyi office fit-out and they delivered two weeks early. The quality speaks for itself — clients comment on it every single day.",
+    name: 'Chukwuemeka Nwosu',
+    role: 'CEO, Meridian Capital',
+    initials: 'CN',
+  },
+  {
+    quote: "From the initial consultation to the final key handover, Cove Associates was professional, transparent, and relentless about quality. I wouldn't use anyone else.",
+    name: 'Folake Adeyemi',
+    role: 'Homeowner, Victoria Island',
+    initials: 'FA',
+  },
+]
+
+function Testimonials() {
+  const ref = useFadeIn()
+  return (
+    <div className="testimonials" ref={ref}>
+      <div className="testimonials-inner">
+        <p className="section-tag" style={{ borderBottom: '1px solid var(--gold)', paddingBottom: '12px', marginBottom: '16px' }}>Client Stories</p>
+        <h2 className="testimonials-heading">What Our Clients Say</h2>
+        <p className="testimonials-sub">Real words from real projects across Lagos and beyond.</p>
+        <div className="testimonials-grid">
+          {testimonials.map((t) => (
+            <div className="testimonial-card" key={t.name}>
+              <div className="stars">{[...Array(5)].map((_, i) => <span key={i} className="star">★</span>)}</div>
+              <p className="testimonial-quote">"{t.quote}"</p>
+              <div className="testimonial-author">
+                <div className="author-avatar">{t.initials}</div>
+                <div>
+                  <div className="author-name">{t.name}</div>
+                  <div className="author-role">{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ── Process ──────────────────────────────────── */
+const steps = [
+  { num: '01', title: 'Discovery & Brief', desc: 'We sit with you to understand your vision, budget, and timeline. No assumptions — just listening.' },
+  { num: '02', title: 'Design & Planning', desc: 'Our architects and designers produce full drawings, 3D renders, and a detailed bill of quantities.' },
+  { num: '03', title: 'Build & Execute', desc: 'Our on-site teams execute with precision under the supervision of a dedicated project manager.' },
+  { num: '04', title: 'Handover & Support', desc: 'We hand over a snag-free, fully inspected project — and stay available for 12 months after.' },
+]
+
+function Process() {
+  const ref = useFadeIn()
+  return (
+    <div className="process" ref={ref}>
+      <div className="process-header">
+        <span className="section-tag">How We Work</span>
+        <h2 className="section-heading" style={{ maxWidth: 500, margin: '0 auto' }}>A Process Built for Peace of Mind</h2>
+      </div>
+      <div className="process-steps">
+        {steps.map((s) => (
+          <div className="process-step" key={s.num}>
+            <div className="step-num">{s.num}</div>
+            <div className="step-title">{s.title}</div>
+            <div className="step-desc">{s.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 /* ── Data ─────────────────────────────────────── */
 const sections = [
   {
     id: 'about',
     tag: 'Who We Are',
-    heading: 'Building Lagos\' Most Ambitious Spaces',
-    body: 'Clutch is a premium design and construction firm delivering residential and commercial projects that exceed expectations. We combine architectural vision with flawless execution.',
+    heading: "Building Lagos' Most Ambitious Spaces",
+    body: 'Cove Associates is a premium design and construction firm delivering residential and commercial projects that exceed expectations. We combine architectural vision with flawless execution — from concept to final key.',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80',
       'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=900&q=80',
       'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&q=80',
     ],
     cta: 'Our Story',
-    ctaLink: '/story' // External Link
+    ctaHref: '/story',
+    ctaIsInternal: true,
   },
   {
     id: 'services',
     tag: 'What We Do',
     heading: 'From Blueprint to Final Key Handover',
-    body: 'Residential builds, commercial fit-outs, interior design, solar & smart-home integration — we handle every phase under one roof so nothing falls between the cracks.',
+    body: 'Residential builds, commercial fit-outs, interior design, solar & smart-home integration — we handle every phase under one roof so nothing falls through the cracks.',
     images: [
       'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80',
       'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80',
@@ -95,7 +194,8 @@ const sections = [
     ],
     reverse: true,
     cta: 'View Services',
-    ctaLink: '/services' // External Link
+    ctaHref: '/services',
+    ctaIsInternal: true,
   },
   {
     id: 'projects',
@@ -108,34 +208,52 @@ const sections = [
       'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&q=80',
     ],
     cta: 'See Portfolio',
-    ctaLink: '/portfolio' // External Link
+    ctaHref: '/portfolio',
+    ctaIsInternal: true,
   },
   {
     id: 'contact',
     tag: 'Get In Touch',
-    heading: 'Let\'s Build Something Remarkable Together',
-    body: 'Ready to start your project? Book a free consultation and our team will walk you through a full scope, timeline, and cost estimate — no obligation.',
+    heading: "Let's Build Something Remarkable Together",
+    body: 'Ready to start your project? Book a free consultation and our team will walk you through a full scope, timeline, and cost estimate — no obligation, no pressure.',
     images: [
       'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=900&q=80',
       'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=900&q=80',
       'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80',
     ],
     reverse: true,
-    cta: 'Book Consultation' // No internal link, defaults to WhatsApp
+    cta: 'Book Consultation',
   },
 ]
 
 const navLinks = ['About', 'Services', 'Projects', 'Contact']
 
-/* ── Placeholder Component for External Pages ─── */
-function ExternalPage({ title }) {
-  useEffect(() => { window.scrollTo(0, 0) }, []);
+/* ── Logo ─────────────────────────────────────── */
+function CoveLogo() {
   return (
-    <div style={{ paddingTop: '150px', paddingBottom: '100px', minHeight: '80vh', textAlign: 'center', paddingInline: '28px' }}>
-      <h1 className="section-heading">{title}</h1>
-      <p className="section-body" style={{ margin: '0 auto 30px auto' }}>This is a dedicated external page.</p>
-      <Link to="/" className="btn-primary" style={{ display: 'inline-block' }}>← Back to Home</Link>
-    </div>
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-svg">
+      <rect width="36" height="36" rx="4" fill="var(--accent)" fillOpacity="0.12" />
+      <path
+        d="M25 11.5C23.2 9.9 20.7 9 18 9C12.5 9 8 13.5 8 19C8 24.5 12.5 29 18 29C20.7 29 23.2 28.1 25 26.5"
+        stroke="var(--accent)"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M15 19H27"
+        stroke="var(--accent)"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M23 15.5L27 19L23 22.5"
+        stroke="var(--accent)"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }
 
@@ -176,36 +294,45 @@ function HomePage() {
 
       {/* SECTIONS */}
       {sections.map((s) => <Section key={s.id} {...s} />)}
+
+      {/* PROCESS */}
+      <Process />
+
+      {/* TESTIMONIALS */}
+      <Testimonials />
     </>
   )
 }
 
-/* ── App Wrapper ──────────────────────────────── */
-export default function App() {
-  const [scrolled, setScrolled] = useState(false)
+/* ── App Shell (Nav + Footer wrapper) ────────── */
+function AppShell() {
+  const [heroLeft, setHeroLeft] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', handler)
-    return () => window.removeEventListener('scroll', handler)
-  }, [])
+    const hero = document.querySelector('.hero')
+    if (!hero) return
+    const obs = new IntersectionObserver(
+      ([entry]) => setHeroLeft(!entry.isIntersecting),
+      { threshold: 0 }
+    )
+    obs.observe(hero)
+    return () => obs.disconnect()
+  }, [location.pathname])
 
- // Force solid navbar on external pages, or when scrolled on home page
-  const isSolid = location.pathname !== '/' || scrolled;
+  const isSolid = location.pathname !== '/' || heroLeft
 
-  // Custom scroll handler that works even if you are on an external page
   const handleNavClick = (id) => {
-    setMenuOpen(false);
+    setMenuOpen(false)
     if (location.pathname !== '/') {
-      navigate('/');
+      navigate('/')
       setTimeout(() => {
-        document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+        document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
     } else {
-      document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
@@ -215,8 +342,8 @@ export default function App() {
       <header className={`nav ${isSolid ? 'nav-solid' : ''}`}>
         <div className="nav-inner">
           <Link to="/" className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <span className="logo-mark">C</span>
-            <span className="logo-text">CLUTCH</span>
+            <CoveLogo />
+            <span className="logo-text">COVE ASSOCIATES</span>
           </Link>
 
           <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
@@ -232,29 +359,24 @@ export default function App() {
           </nav>
 
           <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
-            <span className={menuOpen ? 'bar open' : 'bar'} />
-            <span className={menuOpen ? 'bar open' : 'bar'} />
-            <span className={menuOpen ? 'bar open' : 'bar'} />
+            <span className="bar" />
+            <span className="bar" />
+            <span className="bar" />
           </button>
         </div>
       </header>
 
-      {/* ROUTES */}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/story" element={<ExternalPage title="Our Story" />} />
-        <Route path="/services" element={<ExternalPage title="Services Detail" />} />
-        <Route path="/portfolio" element={<ExternalPage title="Portfolio Showcase" />} />
-      </Routes>
+      {/* MAIN CONTENT */}
+      <HomePage />
 
       {/* FOOTER */}
       <footer className="footer">
         <div className="footer-inner">
           <Link to="/" className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <span className="logo-mark">C</span>
-            <span className="logo-text" style={{ color: 'rgba(255,255,255,0.85)' }}>CLUTCH</span>
+            <CoveLogo />
+            <span className="logo-text">COVE ASSOCIATES</span>
           </Link>
-          <p className="footer-copy">© {new Date().getFullYear()} Clutch Build Ltd. All rights reserved.</p>
+          <p className="footer-copy">© {new Date().getFullYear()} Cove Associates Ltd. All rights reserved.</p>
           <div className="footer-links">
             {navLinks.map(l => (
               <button key={l} className="footer-link" onClick={() => handleNavClick(l)}>{l}</button>
@@ -268,5 +390,17 @@ export default function App() {
         Book a Free Consultation →
       </a>
     </div>
+  )
+}
+
+/* ── App Router ───────────────────────────────── */
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<AppShell />} />
+      <Route path="/story" element={<StoryPage />} />
+      <Route path="/services" element={<ServicesPage />} />
+      <Route path="/portfolio" element={<PortfolioPage />} />
+    </Routes>
   )
 }

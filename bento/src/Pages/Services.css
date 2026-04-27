@@ -1,0 +1,96 @@
+/* ── SERVICES PAGE — Services.css ────────────────────────────── */
+
+:root {
+  --ep-ink: #0f0d0a;
+  --ep-ink-soft: #5a5550;
+  --ep-bg: #f8f6f2;
+  --ep-surface: #ffffff;
+  --ep-gold: #b8912a;
+  --ep-gold-light: #d4aa4e;
+  --ep-border: rgba(0, 0, 0, 0.08);
+  --ep-font-display: 'Cormorant Garamond', 'Georgia', serif;
+  --ep-font-body: 'Outfit', sans-serif;
+  --ep-nav-h: 70px;
+}
+
+/* ── BASE & NAV ──────────────────────────────────────────────── */
+.ep-root { min-height: 100vh; background: var(--ep-bg); font-family: var(--ep-font-body); color: var(--ep-ink); -webkit-font-smoothing: antialiased; }
+.ep-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--ep-nav-h); background: rgba(248, 246, 242, 0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--ep-border); }
+.ep-nav-inner { max-width: 1200px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; }
+.ep-logo { display: flex; align-items: center; text-decoration: none; }
+.ep-logo-text { font-family: var(--ep-font-display); font-weight: 600; font-size: 16px; letter-spacing: 4px; color: var(--ep-ink); }
+.ep-nav-cta { font-size: 13px; font-weight: 600; color: var(--ep-gold); text-decoration: none; padding: 9px 20px; border: 1.5px solid var(--ep-gold); border-radius: 50px; transition: all 0.2s; }
+.ep-nav-cta:hover { background: var(--ep-gold); color: #fff; }
+
+/* ── HERO ────────────────────────────────────────────────────── */
+.ep-hero { position: relative; height: 100dvh; min-height: 580px; display: flex; align-items: flex-end; padding-bottom: 80px; overflow: hidden; }
+.ep-hero-bg { position: absolute; inset: 0; }
+.ep-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+.ep-hero-veil { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,8,5,0.80) 0%, rgba(10,8,5,0.45) 60%, rgba(10,8,5,0.60) 100%); }
+.ep-hero-content { position: relative; z-index: 2; max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 32px; padding-top: var(--ep-nav-h); }
+.ep-kicker { display: block; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--ep-gold-light); font-weight: 500; margin-bottom: 20px; }
+.ep-hero-title { font-family: var(--ep-font-display); font-size: clamp(48px, 8vw, 90px); font-weight: 600; color: #fff; line-height: 1.0; margin-bottom: 20px; }
+.ep-hero-title em { font-style: italic; color: var(--ep-gold-light); }
+.ep-hero-sub { font-size: clamp(15px, 1.8vw, 17px); color: rgba(255,255,255,0.7); max-width: 440px; line-height: 1.65; }
+
+/* ── TYPOGRAPHY & SECTIONS ───────────────────────────────────── */
+.ep-section { max-width: 1200px; margin: 0 auto; padding: 96px 32px; }
+.ep-center { text-align: center; }
+.ep-tag { display: inline-block; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--ep-gold); font-weight: 600; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--ep-gold); }
+.ep-heading { font-family: var(--ep-font-display); font-size: clamp(28px, 3.5vw, 46px); font-weight: 600; line-height: 1.15; color: var(--ep-ink); margin-bottom: 18px; }
+.ep-body { font-size: 16px; line-height: 1.75; color: var(--ep-ink-soft); margin-bottom: 20px; }
+
+/* ── SERVICES LIST ───────────────────────────────────────────── */
+.ep-services-list { display: flex; flex-direction: column; gap: 96px; }
+.ep-service-row { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.ep-service-row--reverse { direction: rtl; }
+.ep-service-row--reverse > * { direction: ltr; }
+.ep-service-img-wrap { border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; position: relative; box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+.ep-service-img { width: 100%; height: 100%; object-fit: cover; }
+.ep-service-img-overlay { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.1) 100%); }
+.ep-service-icon { font-size: 36px; color: var(--ep-gold); margin-bottom: 20px; }
+.ep-service-title { font-family: var(--ep-font-display); font-size: 32px; font-weight: 600; color: var(--ep-ink); margin-bottom: 16px; }
+.ep-service-desc { font-size: 16px; color: var(--ep-ink-soft); line-height: 1.7; margin-bottom: 24px; }
+.ep-service-features { list-style: none; padding: 0; }
+.ep-service-feature { display: flex; align-items: center; gap: 12px; font-size: 14.5px; font-weight: 500; color: var(--ep-ink); margin-bottom: 12px; }
+.ep-check { color: var(--ep-gold); font-size: 12px; }
+
+/* ── PROCESS STEPS ───────────────────────────────────────────── */
+.ep-process-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+.ep-process-step { border-top: 2px solid var(--ep-border); padding-top: 24px; }
+.ep-process-num { font-family: var(--ep-font-display); font-size: 24px; font-weight: 700; color: var(--ep-gold); margin-bottom: 16px; }
+.ep-process-title { font-size: 16px; font-weight: 600; color: var(--ep-ink); margin-bottom: 8px; }
+.ep-process-desc { font-size: 14px; color: var(--ep-ink-soft); line-height: 1.6; }
+
+/* ── VALUES GRID ─────────────────────────────────────────────── */
+.ep-values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; }
+.ep-value-card { background: var(--ep-surface); border: 1px solid var(--ep-border); border-radius: 16px; padding: 32px; text-align: left; }
+.ep-value-icon { display: block; font-size: 32px; color: var(--ep-gold); margin-bottom: 20px; }
+.ep-value-title { font-size: 18px; font-weight: 600; color: var(--ep-ink); margin-bottom: 12px; }
+.ep-value-body { font-size: 14.5px; color: var(--ep-ink-soft); line-height: 1.6; margin: 0; }
+
+/* ── CTA & FOOTER ────────────────────────────────────────────── */
+.ep-cta-section { background: var(--ep-gold); padding: 100px 32px; text-align: center; }
+.ep-cta-heading { font-family: var(--ep-font-display); font-size: clamp(30px, 4vw, 54px); font-weight: 600; color: #fff; margin-bottom: 14px; }
+.ep-cta-sub { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 36px; }
+.ep-cta-btn { display: inline-flex; background: var(--ep-ink); color: #fff; padding: 16px 38px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+.ep-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+
+.ep-footer { background: var(--ep-ink); padding: 32px; display: flex; align-items: center; justify-content: space-between; }
+.ep-footer span, .ep-footer a { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+.ep-footer a:hover { color: #fff; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .ep-service-row { grid-template-columns: 1fr; gap: 40px; }
+  .ep-service-row--reverse { direction: ltr; }
+  .ep-process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .ep-values-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .ep-nav-inner { padding: 0 20px; }
+  .ep-hero-content { padding: 0 20px; padding-top: var(--ep-nav-h); }
+  .ep-section { padding: 64px 20px; }
+  .ep-process-steps, .ep-values-grid { grid-template-columns: 1fr; gap: 24px; }
+  .ep-footer { flex-direction: column; gap: 12px; text-align: center; }
+}
